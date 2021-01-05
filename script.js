@@ -13,14 +13,17 @@ const createListElement = () => {
         input.value = '';
 }
 
-btn.addEventListener('click', function() {
+const addListAfterClick = () => {
     if(inputLength() > 0) {
         createListElement();
     }
-});
+}
 
-input.addEventListener('keypress', function(event) {
+const addListAfterKeypress = (event) => {
     if(inputLength() > 0 && event.code === "Enter" ) {
         createListElement();
     }
-});
+}
+
+btn.addEventListener('click', addListAfterClick);
+input.addEventListener('keypress', addListAfterKeypress);
