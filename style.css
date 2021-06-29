@@ -1,0 +1,14 @@
+li {
+  cursor: pointer;
+}
+.done {
+  text-decoration: line-through;
+  color: #424242;
+}
+
+.deleteBtn {
+  display: inline-block;
+  background-color: coral;
+  border: 1px solid crimson;
+  border-radius: 3px;
+}
