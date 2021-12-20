@@ -2,8 +2,6 @@ const input = document.getElementById('userInput');
 const btn = document.getElementById('enterBtn');
 const ul = document.getElementById('itemList');
 const liItems = document.querySelectorAll('li');
-//or 
-//const liItems = ul.getElementsByTagName('li');
 
 const inputLength = () => {
     return input.value.length;
@@ -54,7 +52,7 @@ function createDeleteLiBtn(event) {
         if (!selectedLi.querySelector('.deleteBtn')) {
         // create btn dynamically next to list item
             const createdBtn = document.createElement('button');
-            createdBtn.appendChild(document.createTextNode("X"));
+            createdBtn.appendChild(document.createTextNode("Delete"));
             createdBtn.classList.add('deleteBtn');
             selectedLi.addEventListener('click', clickDeleteLiBtn);
             selectedLi.appendChild(createdBtn);
