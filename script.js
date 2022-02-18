@@ -3,8 +3,18 @@ const btn = document.getElementById('enter-btn');
 const itemList = document.getElementById('item-list');
 const item = document.querySelectorAll('.item');
 
-const defaultTasks = ["task1", "task2"];
-const tasks = JSON.parse(localStorage.getItem('tasks') || JSON.stringify(defaultTasks));
+const defaultTasks = [
+    { 
+        text: "task1",
+        isDone: false
+    },
+    { 
+        text: "task2",
+        isDone: false
+    }
+];
+
+let tasks = JSON.parse(localStorage.getItem('tasks') || JSON.stringify(defaultTasks));
 
 document.addEventListener('DOMContentLoaded', function () {
     tasks.forEach((task) => {
@@ -35,19 +45,22 @@ const createTaskElement = (task = null) => {
     const textItem = document.createElement('div');
     textItem.classList.add('item-text');
 
-    const btnItem = document.createElement('button');
-    btnItem.innerText = 'Delete';
-    btnItem.classList.add('delete-btn');
-    btnItem.addEventListener('click', clickDeleteItemBtn);
+    const btnDeleteItem = document.createElement('button');
+    btnDeleteItem.innerText = 'Delete';
+    btnDeleteItem.classList.add('delete-btn');
+    btnDeleteItem.addEventListener('click', clickDeleteItemBtn);
 
-    createdItem.append(textItem, btnItem);
+    createdItem.append(textItem, btnDeleteItem);
     itemList.appendChild(createdItem);
 
     if (task) {
-        textItem.innerText = task;
+        textItem.innerText = task.text;
+        if (task.isDone) {
+            createdItem.classList.add('done');
+        }
     } else {
         textItem.innerText = input.value;
-        tasks.push(input.value);
+        tasks.push({text: input.value, isDone: false});
         localStorage.setItem('tasks', JSON.stringify(tasks));
         input.value = '';
     }
@@ -63,12 +76,34 @@ function toggleDone(event) {
     event.stopPropagation();
     const clickedItem = event.target;
     if (clickedItem.classList.contains('item')) {
-        clickedItem.classList.toggle('done');
+        //clickedItem.classList.toggle('done');
+        
+        const itemText = clickedItem.querySelector('.item-text').innerText;
+        if (clickedItem.classList.contains('done')) {
+            clickedItem.classList.remove('done');
+            updateDone(itemText, false);
+        } else {
+            clickedItem.classList.add('done');
+            updateDone(itemText, true);
+        } 
     }
-    console.log(event.target)
+    //console.log(event.target)
 }
 itemList.addEventListener('click', toggleDone);
 
+
+function updateDone(itemText, status) {
+    const complitedTasks = tasks.map((task) => {
+        if (task.text === itemText) {
+            return {...task, isDone: status};
+        }  
+        return task;
+    });
+
+    tasks = complitedTasks;
+
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
 
 // delete the ITEM when cliked on the deleteItemBtn
@@ -82,7 +117,7 @@ function clickDeleteItemBtn(event) {
         console.log("task", selectedTask);
 
         const filteredTasks = tasks.filter((task) => {
-            return task !== selectedTask;
+            return task.text !== selectedTask;
         })
 
         localStorage.setItem('tasks', JSON.stringify(filteredTasks));
