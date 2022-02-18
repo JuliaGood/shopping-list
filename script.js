@@ -14,7 +14,7 @@ const defaultTasks = [
     }
 ];
 
-let tasks = JSON.parse(localStorage.getItem('tasks') || JSON.stringify(defaultTasks));
+const tasks = JSON.parse(localStorage.getItem('tasks') || JSON.stringify(defaultTasks));
 
 document.addEventListener('DOMContentLoaded', function () {
     tasks.forEach((task) => {
@@ -93,14 +93,20 @@ itemList.addEventListener('click', toggleDone);
 
 
 function updateDone(itemText, status) {
-    const complitedTasks = tasks.map((task) => {
-        if (task.text === itemText) {
-            return {...task, isDone: status};
-        }  
-        return task;
-    });
+    // const complitedTasks = tasks.map((task) => {
+    //     if (task.text === itemText) {
+    //         return {...task, isDone: status};
+    //     }  
+    //     return task;
+    // });
 
-    tasks = complitedTasks;
+    // tasks = complitedTasks;
+
+    for (let task of tasks) {
+        if (task.text === itemText) {
+            task.isDone = status;
+        }  
+    }
 
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
