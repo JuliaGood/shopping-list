@@ -3,9 +3,13 @@
   padding: 0;
 }
 
+::selection {
+  color: none;
+  background: none;
+}
+
 body {
-  background: url(./bg-pineapple.jpg);
-  background: url(./bg-fruits.jpg);
+  background: url(./bg-fruits.png);
   /*background-position: center;*/
   background-size: cover;
   background-repeat: no-repeat;
@@ -13,7 +17,7 @@ body {
 
 .container {
   margin: 20px auto;
-  max-width: 550px;
+  max-width: 500px;
   min-height: 650px;
   border: 5px solid white;
   box-shadow: 2px 2px 9px 3px #82818159;
@@ -54,7 +58,7 @@ h1 {
   margin-bottom: 15px;
 }
 
-.userInput, .enterBtn {
+.user-input, .enter-btn {
   border-radius: 4px;
   padding: 12px 20px;
   box-sizing: border-box;
@@ -62,15 +66,15 @@ h1 {
   display: inline-block;
 }
 
-.userInput {
+.user-input {
   width: 100%;
   border: 1px solid #ccc;
 }
-.userInput:focus {
+.user-input:focus {
   border: 1px solid #d9d9d9;
 }
 
-.enterBtn {
+.enter-btn {
   background-color: #3dbe5b;
   border: none;
   color: white;
@@ -79,15 +83,15 @@ h1 {
   font-size: 16px;
   cursor: pointer;
 }
-.enterBtn:hover {
+.enter-btn:hover {
   background-color: #34ab50;
 }
 
-.ul {
+.item-list {
   list-style-type: none;
 }
 
-.li {
+.item {
   cursor: pointer;
   padding: 15px 0;
   border-bottom: 1px solid lightgray;
@@ -96,22 +100,37 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* height: 42px; */
+  height: 42px;
+  vertical-align: middle;
 }
-.done {
+.item.done .item-text {
   text-decoration: line-through;
   color: lightgrey;
 }
+.item.done .delete-btn {
+  visibility: visible;
+}
 
-.deleteBtn {
+.item-text {
+  pointer-events: none;
+}
+
+.delete-btn {
   display: inline-block;
+  visibility: hidden;
   background-color: #fe2889;
   border: 1px solid #fe2889;
   border-radius: 4px;
   text-decoration: none;
   color: white;
   padding: 12px 20px;
-  /* padding: 7px 10px; */
   box-sizing: border-box;
   outline: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.delete-btn:hover {
+  background-color: #e9247d;
+  border: 1px solid #e9247d;
 }
