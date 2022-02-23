@@ -14,7 +14,7 @@ const defaultTasks = [
     }
 ];
 
-const tasks = JSON.parse(localStorage.getItem('tasks') || JSON.stringify(defaultTasks));
+let tasks = JSON.parse(localStorage.getItem('tasks') || JSON.stringify(defaultTasks));
 
 document.addEventListener('DOMContentLoaded', function () {
     tasks.forEach((task) => {
@@ -87,7 +87,7 @@ function toggleDone(event) {
             updateDone(itemText, true);
         } 
     }
-    //console.log(event.target)
+    console.log(tasks)
 }
 itemList.addEventListener('click', toggleDone);
 
@@ -103,7 +103,7 @@ function updateDone(itemText, status) {
     // tasks = complitedTasks;
 
     for (let task of tasks) {
-        if (task.text === itemText) {
+        if (task.text.trim() === itemText.trim()) {
             task.isDone = status;
         }  
     }
@@ -114,18 +114,16 @@ function updateDone(itemText, status) {
 
 // delete the ITEM when cliked on the deleteItemBtn
 function clickDeleteItemBtn(event) {
-    console.log('event', event);
     const selectedBtn = event.target;
 
     if (selectedBtn.classList.contains('delete-btn')) {
         selectedBtn.parentNode.remove();
         const selectedTask = selectedBtn.previousSibling.innerText;
-        console.log("task", selectedTask);
 
-        const filteredTasks = tasks.filter((task) => {
-            return task.text !== selectedTask;
-        })
+        tasks = tasks.filter((task) => {
+            return task.text.trim() !== selectedTask.trim();
+        });
 
-        localStorage.setItem('tasks', JSON.stringify(filteredTasks));
+        localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 }
